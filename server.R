@@ -1,6 +1,6 @@
 library(shiny)
-
 source("chooser.R")
+
 
 shinyServer(
   function(input, output) {
@@ -11,6 +11,7 @@ shinyServer(
       }
       read.csv(file=inFile$datapath, header=TRUE)
     })
+    
 
     output$testChooser <- renderUI(
       if(is.null(filedata()))
@@ -21,18 +22,14 @@ shinyServer(
       })
     
     
-     output$selection <- renderPrint(
-       input$mychooser
-     )
-    # 
-    # output$fileUpload <- renderTable({
-    #   inFile <- input$fileInputControl
-    #   
-    #   if (is.null(inFile))
-    #     return(NULL)
-    #   
-    #   read.csv(inFile$datapath, header=TRUE)
-    # })
-    
+    output$selection <- renderText(
+      # Following line shows the original vector size of input data column
+      # paste('length: ', length(names(filedata())))
+      
+      paste(match(input$mychooser$right, names(filedata())), collapse = ', ')
+      
+      # paste(input$mychooser$right, collapse = ', ')
+      # lengths(input$mychooser$right)
+    )
   }
 )

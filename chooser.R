@@ -28,7 +28,8 @@ chooserInput <- function(inputId, leftLabel, rightLabel, leftChoices, rightChoic
         div(class="chooser-container chooser-right-container",
             tags$select(class="right", size=size, multiple=multiple, rightChoices)
         )
-    )
+    ),
+    div(id="hdn_selectedValues")
   )
 }
 
