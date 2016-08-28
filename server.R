@@ -5,6 +5,7 @@ source("calculation.R")
 
 shinyServer(
   function(input, output) {
+    
     filedata <- reactive({
       inFile <- input$fileInputControl
       if (is.null(inFile)) {
@@ -13,34 +14,39 @@ shinyServer(
       read.csv(file=inFile$datapath, header=TRUE)
     })
     
-
-    output$testChooser <- renderUI(
+    loadChooser <- eventReactive(input$fileInputControl, {
       if(is.null(filedata()))
         h5("no file loaded")
       else {
         chooserInput(
           "mychooser", "Available frobs","Selected frobs",names(filedata()),c(),size = 20,multiple = TRUE)
-      })
+      }
+    })
+
+    output$testChooser <- renderUI({loadChooser()})
     
-    
-    output$selection <- renderText(
-      # Following line shows the original vector size of input data column
-      # paste('length: ', length(names(filedata())))
+    CalculateIndex <- eventReactive(input$calculate, {
       
-      paste(
-        match(input$mychooser$right, names(filedata())), 
-        collapse = ', '
-      )
-    )
+        # Following line shows the original vector size of input data column
+        # paste('length: ', length(names(filedata())))
+        
+        paste(
+          match(input$mychooser$right, names(filedata())), 
+          collapse = ', '
+        )
+    })
     
-    output$result <- renderText(
-      paste(
-        calculatePatientCount(
-          patientDataTable = filedata(), 
-          vectorIndexToApply = match(input$mychooser$right, names(filedata()))
-        ), 
-        ''
-      )
-    )
+    CalculatePatientResult <- eventReactive(input$calculate, {
+        paste(
+          calculatePatientCount(
+            patientDataTable = filedata(), 
+            vectorIndexToApply = match(input$mychooser$right, names(filedata()))
+          ), 
+          ''
+        )
+    })
+    
+    output$selection <- renderText({CalculateIndex()})
+    output$result <- renderText({CalculatePatientResult()})
   }
 )

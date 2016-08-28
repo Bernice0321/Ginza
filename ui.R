@@ -19,6 +19,7 @@ shinyUI(
       # ),
   
       uiOutput("testChooser"),
+      actionButton("calculate", "Calculate Patient Count"),
       verbatimTextOutput("selection"),
       verbatimTextOutput("result")
     )
