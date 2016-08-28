@@ -1,5 +1,6 @@
 library(shiny)
 source("chooser.R")
+source("calculation.R")
 
 
 shinyServer(
@@ -26,10 +27,20 @@ shinyServer(
       # Following line shows the original vector size of input data column
       # paste('length: ', length(names(filedata())))
       
-      paste(match(input$mychooser$right, names(filedata())), collapse = ', ')
-      
-      # paste(input$mychooser$right, collapse = ', ')
-      # lengths(input$mychooser$right)
+      paste(
+        match(input$mychooser$right, names(filedata())), 
+        collapse = ', '
+      )
+    )
+    
+    output$result <- renderText(
+      paste(
+        calculatePatientCount(
+          patientDataTable = filedata(), 
+          vectorIndexToApply = match(input$mychooser$right, names(filedata()))
+        ), 
+        ''
+      )
     )
   }
 )

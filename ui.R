@@ -19,9 +19,8 @@ shinyUI(
       # ),
   
       uiOutput("testChooser"),
-      # verbatimTextOutput("selection"),
-      actionButton("goButton", "Go!"),
-      verbatimTextOutput("selection")
+      verbatimTextOutput("selection"),
+      verbatimTextOutput("result")
     )
   )
 )
