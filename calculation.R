@@ -1,8 +1,8 @@
 calculatePatientCount <- function(patientDataTable, vectorIndexToApply) {
   
   ## TEST DATA START
-  # patientDataTable <- read.csv(file="Cohort.csv", header=TRUE, sep=",")
-  # vectorIndexToApply <- c(1)
+  patientDataTable <- read.csv(file="Cohort.csv", header=TRUE, sep=",")
+  vectorIndexToApply <- c(1, 2)
   ## TEST DATA END
   
   if (!is.null(patientDataTable) 
@@ -12,19 +12,17 @@ calculatePatientCount <- function(patientDataTable, vectorIndexToApply) {
 
     for (i in 1:length(patientDataTable)) {
       if (substr(names(patientDataTable)[i], 1, 2) == 'Ex') {
-        patientDataTable[,i] <- !patientDataTable[,i]
+        patientDataTable[,i] <- abs(patientDataTable[,i] - 1)
       }
     }
     
-    appliedPatientDataTable<-cohort[,vectorIndexToApply]
-    cols <- sapply(appliedPatientDataTable, is.logical)
-    appliedPatientDataTable[,cols] <- lapply(appliedPatientDataTable[,cols], as.numeric)
+    appliedPatientDataTable<-as.data.frame(patientDataTable[,vectorIndexToApply])
     
-    filteredDataTable <- appliedPatientDataTable[apply(appliedPatientDataTable, MARGIN = 1, function(x) all(x==1)), ]
+    filteredDataTable <- as.data.frame(appliedPatientDataTable[apply(appliedPatientDataTable, MARGIN = 1, function(x) all(x==1)), ])
     
     return(nrow(filteredDataTable))
     
-  } else {
+  } else {ed
     return(0)
   }
 }
