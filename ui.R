@@ -14,14 +14,21 @@ shinyUI(
         accept=c('text/csv','text/comma-separated-values,text/plain','.csv')
       ),
   
-      # chooserInput("chooser", "Available frobs", "Selected frobs", 
-      #              row.names(chooser), c(), size = 10, multiple = TRUE
-      # ),
-  
       uiOutput("testChooser"),
-      actionButton("calculate", "Calculate Patient Count"),
+      actionButton("calculate", "Calculate Patient Count")
+    ),
+  
+    mainPanel(
+      h4("Index(es) of applied criteria"),
       verbatimTextOutput("selection"),
-      verbatimTextOutput("result")
+      h4("Initial patient count"),
+      verbatimTextOutput("totalPatientCount"),
+      h4("Total patient count after applied criteria"),
+      verbatimTextOutput("filteredPatientCount"),
+      h4("Total patient count filtered out"),
+      verbatimTextOutput("patientCountDiff"),
+      h4("Percentage"),
+      plotOutput("percentagePlot")
     )
   )
 )
