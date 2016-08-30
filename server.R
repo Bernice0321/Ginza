@@ -30,7 +30,7 @@ shinyServer(
         h5("no file loaded")
       else {
         chooserInput(
-          "mychooser", "Available frobs","Selected frobs",names(filedata()),c(),size = 20,multiple = TRUE)
+          "mychooser", "Available frobs","Selected frobs",names(filedata()),c(),size = length(names(filedata())),multiple = TRUE)
       }
     })
 

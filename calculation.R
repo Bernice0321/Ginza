@@ -1,8 +1,8 @@
 calculatePatientCount <- function(patientDataTable, vectorIndexToApply) {
   
   ## TEST DATA START
-  patientDataTable <- read.csv(file="Cohort.csv", header=TRUE, sep=",")
-  vectorIndexToApply <- c(1, 2)
+  # patientDataTable <- read.csv(file="Cohort.csv", header=TRUE, sep=",")
+  # vectorIndexToApply <- c(1, 2)
   ## TEST DATA END
   
   if (!is.null(patientDataTable) 
